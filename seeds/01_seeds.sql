@@ -9,11 +9,11 @@ VALUES (1, 'Best House NA', 'description', 'https://images.pexels.com/photos/208
 (3, 'Mid House', 'description', 'https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h=350', 'https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg', 1000, 2, 2, 3, 'Canada', 'Style St.', 'Montreal', 'Quebec', 'B8U 9JK', FALSE);
 
 INSERT INTO reservations (start_date, end_date, property_id, guest_id)
-VALUES ('2022-10-11', '2022-10-15', 4, 1),
-('2022-11-01', '2022-11-15', 5, 2),
-('2022-12-05', '2022-12-29', 6, 3);
+VALUES ('2022-10-11', '2022-10-15', 1, 1),
+('2022-11-01', '2022-11-15', 2, 2),
+('2022-12-05', '2022-12-29', 3, 3);
 
 INSERT INTO property_reviews (guest_id, property_id, reservation_id, rating, message)
-VALUES (1, 4, 7, 8, 'amazing!!'),
-(2, 5, 8, 6, 'Weird smell'),
-(3, 6, 9, 9, 'Best view');
+VALUES (1, 1, 1, 8, 'amazing!!'),
+(2, 2, 2, 6, 'Weird smell'),
+(3, 3, 3, 9, 'Best view');

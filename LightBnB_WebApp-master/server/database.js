@@ -115,16 +115,16 @@ const getAllProperties = function(options, limit = 10) {
   SELECT properties.*, avg(property_reviews.rating) as average_rating
   FROM properties
   JOIN property_reviews ON properties.id = property_id
-  `;
+  `;  
 
   //Function that inserts "AND" into the query
   const addAnd = function() {
     if (queryParams.length) {
       queryString += `AND `;
     }
-  };
+  }; 
 
-  if (Object.keys(options).length = 1) {
+  if (Object.keys(options).length) {
     queryString += `WHERE `;
   }
 
@@ -138,15 +138,16 @@ const getAllProperties = function(options, limit = 10) {
     queryParams.push(options.owner_id);
     queryString += `owner_id = $${queryParams.length} `;
   }
+  
   if (options.minimum_price_per_night) {
     addAnd();
     queryParams.push(options.minimum_price_per_night);
-    queryString += `cost_per_night > $${queryParams.length} `;
+    queryString += `cost_per_night >= ($${queryParams.length} * 100) `;
   }
   if (options.maximum_price_per_night) {
     addAnd();
     queryParams.push(options.maximum_price_per_night);
-    queryString += `cost_per_night < $${queryParams.length} `;
+    queryString += `cost_per_night <= ($${queryParams.length} * 100) `;
   }
   
   let realRating;
@@ -154,6 +155,8 @@ const getAllProperties = function(options, limit = 10) {
   if (options.minimum_rating) {
     queryParams.push(options.minimum_rating);
     realRating = `HAVING avg(property_reviews.rating) > $${queryParams.length} `;
+  } else {
+    realRating = '';
   }
 
   queryParams.push(limit);
@@ -163,8 +166,11 @@ const getAllProperties = function(options, limit = 10) {
   ORDER BY cost_per_night
   LIMIT $${queryParams.length};
   `;
-
-  return pool.query(queryString, queryParams).then((res) => res.rows);
+  
+  return pool.query(queryString, queryParams)
+  .then((res) => {
+    return res.rows
+    });
 };
 exports.getAllProperties = getAllProperties;
 
